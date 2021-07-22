@@ -1,18 +1,25 @@
-import * as React from "react";
-import { ChakraProvider, Box, Text, VStack, Grid } from "@chakra-ui/react";
-import { ColorModeSwitcher } from "./components/ColorModeSwitcher";
-// theme
-import MyCustomTheme from "./theme/MyCustomTheme";
+import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+// chakra
+import { ChakraProvider, Flex } from '@chakra-ui/react';
+// my theme
+import MyCustomTheme from './theme/MyCustomTheme';
+// components
+import { ColorModeSwitcher } from './components/ColorModeSwitcher';
+// pages
+import ListagemPedidos from './pages/ListagemPedidos';
+import DetalhePedido from './pages/DetalhePedido';
 
 export const App = () => (
   <ChakraProvider resetCSS={true} theme={MyCustomTheme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Text>Pronto para iniciar</Text>
-        </VStack>
-      </Grid>
-    </Box>
+    <BrowserRouter>
+      <Flex position="absolute" right="10px" top="10px">
+        <ColorModeSwitcher />
+      </Flex>
+      <Switch>
+        <Route exact path="/" component={ListagemPedidos} />
+        <Route exact path="/detalhes/:id" component={DetalhePedido} />
+      </Switch>
+    </BrowserRouter>
   </ChakraProvider>
 );
