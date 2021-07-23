@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 // chakra
-import { ChakraProvider, Flex } from '@chakra-ui/react';
+import { ChakraProvider, Box } from '@chakra-ui/react';
 // my theme
 import MyCustomTheme from './theme/MyCustomTheme';
 // components
-import { ColorModeSwitcher } from './components/ColorModeSwitcher';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 // pages
 import ListagemPedidos from './pages/ListagemPedidos';
 import DetalhePedido from './pages/DetalhePedido';
@@ -13,13 +14,17 @@ import DetalhePedido from './pages/DetalhePedido';
 export const App = () => (
   <ChakraProvider resetCSS={true} theme={MyCustomTheme}>
     <BrowserRouter>
-      <Flex position="absolute" right="10px" top="10px">
-        <ColorModeSwitcher />
-      </Flex>
-      <Switch>
-        <Route exact path="/" component={ListagemPedidos} />
-        <Route exact path="/detalhes/:id" component={DetalhePedido} />
-      </Switch>
+      <Header />
+      <Box as="main" p="30px 10px" minH="50vh">
+        <Switch>
+          {/* ROTAS DA APLICAÇÃO */}
+          {/* ROTA PADRÃO */}
+          <Route exact path="/" component={ListagemPedidos} />
+          {/* ROTA DETALHE ONDE PASSA O PARÂMETRO 'ID', UTILIZADO PARA DAR FETCH NA API */}
+          <Route exact path="/detalhes/:id" component={DetalhePedido} />
+        </Switch>
+      </Box>
+      <Footer />
     </BrowserRouter>
   </ChakraProvider>
 );
