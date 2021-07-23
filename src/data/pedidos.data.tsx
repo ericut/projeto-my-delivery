@@ -77,8 +77,8 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
       customer: {
         name: 'JUAREZ',
       },
-      amount: 89840,
-      deliveryFee: 10300,
+      amount: 8980,
+      deliveryFee: 1030,
       payments: [
         {
           method: 'CREDIT',
@@ -94,15 +94,15 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
       customer: {
         name: 'JUAREZ',
       },
-      amount: 89840,
-      deliveryFee: 10300,
+      amount: 8980,
+      deliveryFee: 1030,
       payments: [
         {
           method: 'CREDIT',
           amount: 8980,
         },
       ],
-      date: '2021-07-18 10:30:30',
+      date: '2021-05-18 10:30:30',
     },
     {
       _id: '60f9f29bdb5c71de58a08d74',
@@ -119,7 +119,7 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
           amount: 10,
         },
       ],
-      date: '2021-07-17 11:30:30',
+      date: '2021-04-17 11:30:30',
     },
   ],
 };

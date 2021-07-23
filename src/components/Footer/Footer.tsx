@@ -24,7 +24,7 @@ export default function Footer() {
   ];
 
   return (
-    <Flex as="footer" alignItems="center" flexDirection="column" p="40px 10px">
+    <Flex as="footer" alignItems="center" flexDirection="column" p="40px 20px">
       <Flex>
         <HStack pb="20px">
           {redesSociais.map((item) => {

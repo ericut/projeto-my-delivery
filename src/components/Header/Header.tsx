@@ -13,13 +13,13 @@ export default function Header() {
       w="100%"
       h={{ lg: '120px', md: '100px', sm: '80px' }}
       boxShadow="lg"
-      px="10px"
+      px="20px"
       justifyContent="center"
       bg={HeaderBg}
       transition="0.5s all"
     >
       <Flex w={{ lg: '1100px', md: '90%', sm: '100%' }} alignItems="center" justifyContent="space-between">
-        <Heading size="lg" fontSize={{ lg: '36px', md: '24px', sm: '20px' }} color="white">
+        <Heading as="h1" size="lg" fontSize={{ lg: '36px', md: '28px', sm: '24px' }} color="white">
           • MyDelivery •
         </Heading>
         <ColorModeSwitcher />

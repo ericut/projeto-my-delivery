@@ -15,7 +15,7 @@ export const App = () => (
   <ChakraProvider resetCSS={true} theme={MyCustomTheme}>
     <BrowserRouter>
       <Header />
-      <Box as="main" p="30px 10px" minH="50vh">
+      <Box as="main" p="30px 20px" minH="50vh">
         <Switch>
           {/* ROTAS DA APLICAÇÃO */}
           {/* ROTA PADRÃO */}
