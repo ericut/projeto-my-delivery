@@ -19,7 +19,7 @@ export const App = () => (
         <Switch>
           {/* ROTAS DA APLICAÇÃO */}
           {/* ROTA PADRÃO */}
-          <Route exact path="/" component={ListagemPedidos} />
+          <Route path="/" component={ListagemPedidos} />
           {/* ROTA DETALHE ONDE PASSA O PARÂMETRO 'ID', UTILIZADO PARA DAR FETCH NA API */}
           <Route exact path="/detalhes/:id" component={DetalhePedido} />
         </Switch>
