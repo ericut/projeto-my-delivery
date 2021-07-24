@@ -1,17 +1,17 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 // chakra
-import { Text, HStack, Flex, Box, Tooltip, Grid, Button, useColorModeValue } from '@chakra-ui/react';
+import { Text, HStack, Flex, Box, Tooltip, Grid, GridItem, Button, useColorModeValue } from '@chakra-ui/react';
 // icons
-import { BiCalendar } from 'react-icons/bi';
-import { FaUserCircle, FaMoneyBill } from 'react-icons/fa';
+import { BiCalendar, BiFoodMenu } from 'react-icons/bi';
+import { FaCreditCard, FaUserCircle, FaMoneyBill, FaStore, FaMapMarkerAlt } from 'react-icons/fa';
 // interfaces
-import { IPedidoDataOrdersProps, IPedidoDataOrderDetailProps } from '../../interfaces/pedidos.interface';
+import { IPedidoDataOrdersProps } from '../../interfaces/pedidos.interface';
 
 interface IDadosPedido {
   key?: string | undefined;
   dadosPedido?: IPedidoDataOrdersProps;
-  detalhePedido?: IPedidoDataOrderDetailProps;
+  detalhePedido?: IPedidoDataOrdersProps;
 }
 
 // formatter
@@ -20,11 +20,10 @@ const traduzirMeses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', '
 export default function CardPedido({ dadosPedido, detalhePedido }: IDadosPedido) {
   // color mode chakra
   const CardBGColor = useColorModeValue('gray.100', 'gray.700');
+  const SubCardBGColor = useColorModeValue('gray.200', 'gray.800');
   const DateBGColor = useColorModeValue('gray.200', 'gray.600');
 
-  const [itemPedido, setItemPedido] = useState<IPedidoDataOrdersProps | IPedidoDataOrderDetailProps | undefined>(
-    undefined
-  );
+  const [itemPedido, setItemPedido] = useState<IPedidoDataOrdersProps | undefined>(undefined);
 
   useEffect(() => {
     if (dadosPedido) {
@@ -65,16 +64,126 @@ export default function CardPedido({ dadosPedido, detalhePedido }: IDadosPedido)
   }, [itemPedido, DateBGColor]);
 
   // componente para mostrar os detalhes extra do pedido
-  const MaisDetalhesPedido = () => {
-    return <>detalhe</>;
+  const maisDetalhesPedido = () => {
+    let somaPedido = itemPedido?.items?.reduce((prevVal, element) => {
+      return +prevVal + +element.amount;
+    }, 0);
+
+    return itemPedido ? (
+      <Grid my="20px" templateRows={{ md: 'repeat(2, 1fr)', sm: '1fr' }} templateColumns="repeat(3, 1fr)" gap={3}>
+        <GridItem colSpan={{ sm: 3 }}>
+          <Box bg={SubCardBGColor} borderRadius="4px" p="10px">
+            <Flex alignItems="center" color="gray.500">
+              <Text w="15px" mr="5px">
+                <BiFoodMenu />
+              </Text>
+              <Text fontWeight="bold">Itens do Pedido</Text>
+            </Flex>
+            <Flex ml="20px" pr={{ md: '20px', sm: '10px' }} flexDirection="column">
+              {itemPedido.items?.map((subItem) => {
+                return (
+                  <Flex justifyContent="space-between" borderBottom="1px dotted" borderBottomColor="gray.600">
+                    <Text w="50%">{subItem.name}</Text>
+                    <Text w={{ md: '20%', sm: '10%' }} textAlign="right">
+                      {subItem.quantity}
+                    </Text>
+                    <Text w={{ md: '30%', sm: '40%' }} textAlign="right">
+                      {valorDoPedido(+subItem.amount)}
+                    </Text>
+                  </Flex>
+                );
+              })}
+              <Flex
+                justifyContent="flex-end"
+                borderTop="1px solid"
+                borderTopColor="gray.600"
+                py="5px"
+                fontWeight="bold"
+              >
+                {valorDoPedido(Number(somaPedido))}
+              </Flex>
+            </Flex>
+          </Box>
+        </GridItem>
+        <GridItem colSpan={{ md: 1, sm: 3 }}>
+          <Box p="10px">
+            <Flex alignItems="center" color="gray.500">
+              <Text w="15px" mr="5px">
+                <FaMapMarkerAlt />
+              </Text>
+              <Text fontWeight="bold">Endereço de entrega</Text>
+            </Flex>
+            <Flex ml="20px" pr={{ md: '20px', sm: '10px' }} flexDirection="column">
+              <Text>{`${itemPedido.address?.street}, ${itemPedido.address?.number} (${itemPedido.address?.complement})`}</Text>
+              <Text>{`${itemPedido.address?.neighborhood} - ${itemPedido.address?.city} / ${itemPedido.address?.state}`}</Text>
+            </Flex>
+          </Box>
+        </GridItem>
+        <GridItem colSpan={{ md: 1, sm: 3 }}>
+          <Box p="10px">
+            <Flex alignItems="center" color="gray.500">
+              <Text w="15px" mr="5px">
+                <FaCreditCard />
+              </Text>
+              <Text fontWeight="bold">Pagamento</Text>
+            </Flex>
+            <Flex ml="20px" pr={{ md: '20px', sm: '10px' }} flexDirection="column">
+              {itemPedido.payments?.map((subItem) => {
+                return (
+                  <Flex justifyContent="space-between" borderBottom="1px dotted" borderBottomColor="gray.600">
+                    <Text w="60%">{subItem.method}</Text>
+                    <Text w={{ md: '30%', sm: '40%' }} textAlign="right">
+                      {valorDoPedido(+subItem.amount)}
+                    </Text>
+                  </Flex>
+                );
+              })}
+            </Flex>
+          </Box>
+        </GridItem>
+        <GridItem colSpan={{ md: 1, sm: 3 }}>
+          <Box p="10px">
+            <Flex alignItems="center" color="gray.500">
+              <Text w="15px" mr="5px">
+                <FaMoneyBill />
+              </Text>
+              <Text fontWeight="bold">Valores</Text>
+            </Flex>
+            <Flex ml="20px" pr={{ md: '20px', sm: '10px' }} flexDirection="column">
+              <Flex justifyContent="space-between" borderBottom="1px dotted" borderBottomColor="gray.600" p="5px">
+                <Text>Frete</Text>
+                <Text textAlign="right">{valorDoPedido(+itemPedido.deliveryFee)}</Text>
+              </Flex>
+              <Flex justifyContent="space-between" border="2px dotted" borderColor="green.500" p="5px">
+                <Text>Valor Total</Text>
+                <Text textAlign="right" fontSize="18px" fontWeight="bold">
+                  {valorDoPedido(+itemPedido.amount + +itemPedido.deliveryFee)}
+                </Text>
+              </Flex>
+            </Flex>
+          </Box>
+        </GridItem>
+      </Grid>
+    ) : (
+      <></>
+    );
   };
 
   return (
     <>
       {itemPedido ? (
-        <Grid templateRows="40px 1fr" mb="20px" p="10px 20px 14px" bg={CardBGColor} borderRadius="6px 18px 6px 6px">
+        <Grid
+          templateRows="40px 1fr"
+          mb="20px"
+          p={{ md: '10px 20px 14px', sm: '20px 10px' }}
+          bg={CardBGColor}
+          borderRadius="6px 18px 6px 6px"
+        >
           <Flex justifyContent="space-between" alignItems="center">
             <Flex mb="5px" alignItems="baseline" flexDirection={{ md: 'initial', sm: 'column' }}>
+              <Text color="green.400" w="16px" mr="10px" display={{ md: 'flex', sm: 'none' }}>
+                <FaStore />
+              </Text>
               <Text fontSize="20px" fontWeight="bold" pr="20px">
                 {itemPedido.store}
               </Text>
@@ -104,7 +213,7 @@ export default function CardPedido({ dadosPedido, detalhePedido }: IDadosPedido)
                     )}`}
                     placement="right"
                   >
-                    {valorDoPedido(itemPedido.amount + itemPedido.deliveryFee)}
+                    <Text>{valorDoPedido(itemPedido.amount + itemPedido.deliveryFee)}</Text>
                   </Tooltip>
                 </Text>
               </Flex>
@@ -122,7 +231,7 @@ export default function CardPedido({ dadosPedido, detalhePedido }: IDadosPedido)
               <></>
             )}
           </Flex>
-          {detalhePedido ? <MaisDetalhesPedido /> : <></>}
+          {detalhePedido ? maisDetalhesPedido() : <></>}
         </Grid>
       ) : (
         <></>

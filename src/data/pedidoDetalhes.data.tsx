@@ -1,6 +1,6 @@
-import { IPedidosProps, IPedidoDataOrderDetailProps } from '../interfaces/pedidos.interface';
+import { IPedidosProps, IPedidoDataOrdersProps } from '../interfaces/pedidos.interface';
 
-export const pedidoDetalhesData: IPedidosProps<IPedidoDataOrderDetailProps> = {
+export const pedidoDetalhesData: IPedidosProps<IPedidoDataOrdersProps> = {
   orders: [
     {
       _id: '5f1a4d41db80ebde9c5bbd18',
@@ -20,7 +20,7 @@ export const pedidoDetalhesData: IPedidosProps<IPedidoDataOrderDetailProps> = {
       items: [
         {
           name: 'Pizza',
-          amount: '4990',
+          amount: '5990',
           quantity: 1,
           note: null,
         },
@@ -59,7 +59,7 @@ export const pedidoDetalhesData: IPedidosProps<IPedidoDataOrderDetailProps> = {
       items: [
         {
           name: 'Hamburguer',
-          amount: '2990',
+          amount: '3990',
           quantity: 1,
           note: null,
         },
@@ -103,7 +103,7 @@ export const pedidoDetalhesData: IPedidosProps<IPedidoDataOrderDetailProps> = {
           note: null,
         },
       ],
-      amount: 8980,
+      amount: 2980,
       deliveryFee: 1000,
       payments: [
         {
@@ -137,7 +137,7 @@ export const pedidoDetalhesData: IPedidosProps<IPedidoDataOrderDetailProps> = {
         },
         {
           name: 'Hamburguer',
-          amount: '2990',
+          amount: '3990',
           quantity: 1,
           note: null,
         },
@@ -175,7 +175,7 @@ export const pedidoDetalhesData: IPedidosProps<IPedidoDataOrderDetailProps> = {
           note: null,
         },
       ],
-      amount: 8980,
+      amount: 4990,
       deliveryFee: 1030,
       payments: [
         {
@@ -208,7 +208,7 @@ export const pedidoDetalhesData: IPedidosProps<IPedidoDataOrderDetailProps> = {
           note: null,
         },
       ],
-      amount: 8980,
+      amount: 4980,
       deliveryFee: 1030,
       payments: [
         {

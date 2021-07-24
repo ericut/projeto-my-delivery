@@ -17,7 +17,7 @@ const ListagemPedidos = () => {
   // set da listagem de dados mocados
   // caso estivesse puxando de uma api seria utilizado método de FETCH DATA API para popular o estado setListaPedido()
   //
-  // neste projeto não iremos tratar desta meneira mas como exemplo podemos utilizar o Query Params
+  // neste projeto não iremos tratar desta meneira mas como exemplo podemos utilizar o Query Params (caso a API solicite POST)
   // fetch('https://url',{method: 'POST', body: query:`{objectStrigs}`}).then(response => {setListaPedido(response.data)})
   //
   const [listaPedidos] = useState<IPedidoDataOrdersProps[]>(pedidosData.orders);

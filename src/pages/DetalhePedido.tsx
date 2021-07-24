@@ -7,7 +7,7 @@ import { BiFoodMenu } from 'react-icons/bi';
 // data
 import { pedidoDetalhesData } from '../data/pedidoDetalhes.data';
 // interfaces
-import { IPedidoDataOrderDetailProps } from '../interfaces/pedidos.interface';
+import { IPedidoDataOrdersProps } from '../interfaces/pedidos.interface';
 // components
 import CardPedido from './components/CardPedido';
 
@@ -17,7 +17,7 @@ const DetalhePedido = () => {
   // params
   let { id }: any = useParams();
   //
-  const [detalhesPedido, setDetalhesPedido] = useState<IPedidoDataOrderDetailProps | undefined>(undefined);
+  const [detalhesPedido, setDetalhesPedido] = useState<IPedidoDataOrdersProps | undefined>(undefined);
 
   //
   // set do detalhes pedido de dados mocados
@@ -29,7 +29,7 @@ const DetalhePedido = () => {
   useEffect(() => {
     setDetalhesPedido(
       pedidoDetalhesData?.orders
-        ? pedidoDetalhesData?.orders.find((item: IPedidoDataOrderDetailProps) => {
+        ? pedidoDetalhesData?.orders.find((item: IPedidoDataOrdersProps) => {
             return item._id === id;
           })
         : undefined

@@ -9,13 +9,10 @@ export interface IPedidoDataOrdersProps {
   customer: IPedidoCustomerProps;
   amount: number;
   deliveryFee: number;
-  payments: IPedidoPaymentsProps[];
   date?: string;
-}
-
-export interface IPedidoDataOrderDetailProps extends IPedidoDataOrdersProps {
-  address: IPedidoAdressProps;
-  items: IPedidoItemsProps[];
+  address?: IPedidoAdressProps;
+  items?: IPedidoItemsProps[];
+  payments?: IPedidoPaymentsProps[];
 }
 
 export interface IPedidoCustomerProps {

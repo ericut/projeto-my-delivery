@@ -13,13 +13,13 @@ import DetalhePedido from './pages/DetalhePedido';
 
 export const App = () => (
   <ChakraProvider resetCSS={true} theme={MyCustomTheme}>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Header />
       <Box as="main" p="30px 20px" minH="50vh">
         <Switch>
           {/* ROTAS DA APLICAÇÃO */}
           {/* ROTA PADRÃO */}
-          <Route path="/" component={ListagemPedidos} />
+          <Route exact path="/" component={ListagemPedidos} />
           {/* ROTA DETALHE ONDE PASSA O PARÂMETRO 'ID', UTILIZADO PARA DAR FETCH NA API */}
           <Route exact path="/detalhes/:id" component={DetalhePedido} />
         </Switch>

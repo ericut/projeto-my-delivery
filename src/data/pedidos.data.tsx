@@ -11,12 +11,6 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
       },
       amount: 8980,
       deliveryFee: 1000,
-      payments: [
-        {
-          method: 'CREDIT',
-          amount: 8980,
-        },
-      ],
       date: '2021-07-20 12:20:30',
     },
     {
@@ -28,12 +22,6 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
       },
       amount: 8980,
       deliveryFee: 1000,
-      payments: [
-        {
-          method: 'CREDIT',
-          amount: 8980,
-        },
-      ],
       date: '2021-07-20 11:20:30',
     },
     {
@@ -45,12 +33,6 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
       },
       amount: 8980,
       deliveryFee: 1000,
-      payments: [
-        {
-          method: 'CREDIT',
-          amount: 8980,
-        },
-      ],
       date: '2021-07-22 11:20:30',
     },
     {
@@ -62,12 +44,6 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
       },
       amount: 8980,
       deliveryFee: 1000,
-      payments: [
-        {
-          method: 'CREDIT',
-          amount: 8980,
-        },
-      ],
       date: '2021-07-22 12:25:30',
     },
     {
@@ -79,12 +55,6 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
       },
       amount: 8980,
       deliveryFee: 1030,
-      payments: [
-        {
-          method: 'CREDIT',
-          amount: 8980,
-        },
-      ],
       date: '2021-07-17 12:25:30',
     },
     {
@@ -96,12 +66,6 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
       },
       amount: 8980,
       deliveryFee: 1030,
-      payments: [
-        {
-          method: 'CREDIT',
-          amount: 8980,
-        },
-      ],
       date: '2021-05-18 10:30:30',
     },
     {
@@ -113,12 +77,6 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
       },
       amount: 20000,
       deliveryFee: 1000,
-      payments: [
-        {
-          method: 'CREDIT',
-          amount: 10,
-        },
-      ],
       date: '2021-04-17 11:30:30',
     },
   ],
