@@ -5,7 +5,7 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
     {
       _id: '5f1a4d41db80ebde9c5bbd18',
       reference: 1231251,
-      store: 'DPIZZA',
+      store: 'MEGAPIZZA',
       customer: {
         name: 'Kayo',
       },
@@ -16,7 +16,7 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
     {
       _id: '5f1a4e70db80ebde9c5bbd1e',
       reference: 1231252,
-      store: 'DPIZZA',
+      store: 'SUPERB',
       customer: {
         name: 'Kayo',
       },
@@ -31,14 +31,14 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
       customer: {
         name: 'Jon Snow',
       },
-      amount: 8980,
+      amount: 2980,
       deliveryFee: 1000,
       date: '2021-07-22 11:20:30',
     },
     {
       _id: '60dbc44e974567510b629d3d',
       reference: 1231254,
-      store: 'DPIZZA',
+      store: 'ESFIHARIA',
       customer: {
         name: 'Kayo',
       },
@@ -71,7 +71,7 @@ export const pedidosData: IPedidosProps<IPedidoDataOrdersProps> = {
     {
       _id: '60f9f29bdb5c71de58a08d74',
       reference: 1231257,
-      store: 'DPIZZA',
+      store: 'ZEROGRAU',
       customer: {
         name: 'teste',
       },
