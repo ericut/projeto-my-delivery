@@ -12,6 +12,8 @@ import {
   FormControl,
   FormLabel,
   Select,
+  Button,
+  HStack,
 } from '@chakra-ui/react';
 // icons
 import { IoFastFood } from 'react-icons/io5';
@@ -26,10 +28,14 @@ import CardPedido from './components/CardPedido';
 const ListagemPedidos = () => {
   const HeadingColor = useColorModeValue('blue.800', 'blue.200');
   const FiltersBGColor = useColorModeValue('blue.100', 'blue.800');
-  //
+  // filtros
   const [buscarLoja, setBuscarLoja] = useState<string>('');
   const [buscarValor, setBuscarValor] = useState<string>('');
-
+  // paginador
+  const [paginaAtual, setPaginaAtual] = useState<number>(1);
+  const [itensPorPagina, setItensPorPagina] = useState<number>(3);
+  const ultimaPagina = paginaAtual * itensPorPagina;
+  const primeiraPagina = ultimaPagina - itensPorPagina;
   //
   // set da listagem de dados mocados
   // caso estivesse puxando de uma api seria utilizado método de FETCH DATA API para popular o estado setListaPedido()
@@ -40,28 +46,31 @@ const ListagemPedidos = () => {
   const [listaPedidos, setListaPedidos] = useState<IPedidoDataOrdersProps[]>(pedidosData.orders);
 
   const listagemPedidos = useMemo(() => {
-    return listaPedidos.map((item) => {
+    // slicer da página atual
+    const itensAtuais = listaPedidos.slice(primeiraPagina, ultimaPagina);
+    // render dos itens por página
+    return itensAtuais.map((item) => {
       return <CardPedido key={item._id} dadosPedido={item} />;
     });
-  }, [listaPedidos]);
+  }, [listaPedidos, primeiraPagina, ultimaPagina]);
 
-  const filtrosPedido = () => {
+  const filtrosPedidos = () => {
     function handleFiltrarTela() {
-      let dadosFiltrados = pedidosData.orders.filter((filteredItem) => {
-        let valorTotal = filteredItem.amount + filteredItem.deliveryFee;
-        let lojaFiltrada = buscarLoja && filteredItem.store.indexOf(buscarLoja.toUpperCase()) !== -1;
-        let valorFiltrado = buscarValor && valorTotal <= +buscarValor * 100;
-        return lojaFiltrada || valorFiltrado;
-      });
-
-      setListaPedidos(dadosFiltrados);
+      if (buscarLoja !== '' || buscarValor !== '') {
+        let dadosFiltrados = pedidosData.orders.filter((filteredItem) => {
+          let valorTotal = filteredItem.amount + filteredItem.deliveryFee;
+          let lojaFiltrada = buscarLoja && filteredItem.store.indexOf(buscarLoja.toUpperCase()) !== -1;
+          let valorFiltrado = buscarValor && valorTotal <= +buscarValor * 100;
+          return lojaFiltrada || valorFiltrado;
+        });
+        setListaPedidos(dadosFiltrados);
+      }
     }
     function handleLimparFiltros() {
       setListaPedidos(pedidosData.orders);
       setBuscarLoja('');
       setBuscarValor('');
     }
-
     return (
       <Flex
         mb="30px"
@@ -110,6 +119,51 @@ const ListagemPedidos = () => {
     );
   };
 
+  const ordenacaoPedidos = () => {
+    return (
+      <Flex justifyContent="space-between" mb="20px">
+        <Box>Ordernadores</Box>
+        <Box>Mudar visão</Box>
+      </Flex>
+    );
+  };
+
+  const paginacaoPedidos = () => {
+    // paginação simples
+    let paginasListadas = [];
+    for (let i = 1; i <= Math.ceil(listaPedidos.length / itensPorPagina); i++) {
+      paginasListadas.push(i);
+    }
+    // função para mudar página
+    function mudarPaginacao(pagina: number) {
+      setPaginaAtual(pagina);
+    }
+    return (
+      <Flex justifyContent="space-between">
+        <Flex alignItems="center">
+          <Select value={itensPorPagina} mr="5px" onChange={(e) => setItensPorPagina(+e.target.value)}>
+            <option value="2">2 itens</option>
+            <option value="3">3 itens</option>
+            <option value="4">4 itens</option>
+            <option value="6">6 itens</option>
+          </Select>
+          <Text textTransform="uppercase" fontSize="10px" color="gray.400">
+            /Página
+          </Text>
+        </Flex>
+        <HStack>
+          {paginasListadas.map((pagina) => {
+            return (
+              <Button key={pagina} p="5px" onClick={() => mudarPaginacao(pagina)}>
+                {pagina}
+              </Button>
+            );
+          })}
+        </HStack>
+      </Flex>
+    );
+  };
+
   return (
     <Flex justifyContent="center">
       <Grid templateRows="50px" w={{ lg: '1100px', md: '90%', sm: '100%' }}>
@@ -121,8 +175,9 @@ const ListagemPedidos = () => {
             Pedidos
           </Heading>
         </Flex>
-        <Box>{filtrosPedido()}</Box>
+        <Box>{filtrosPedidos()}</Box>
         <Box>{listagemPedidos}</Box>
+        <Box>{paginacaoPedidos()}</Box>
       </Grid>
     </Flex>
   );
