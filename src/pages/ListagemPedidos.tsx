@@ -12,18 +12,18 @@ import {
   FormControl,
   FormLabel,
   Select,
-  Button,
   HStack,
 } from '@chakra-ui/react';
 // icons
 import { IoFastFood } from 'react-icons/io5';
-import { FaSearch, FaTrash } from 'react-icons/fa';
+import { FaSearch, FaTrash, FaSortAlphaDown, FaSortAlphaUpAlt } from 'react-icons/fa';
 // data
 import { pedidosData } from '../data/pedidos.data';
 // interfaces
 import { IPedidoDataOrdersProps } from '../interfaces/pedidos.interface';
 // components
 import CardPedido from './components/CardPedido';
+import Paginacao from './components/Paginacao';
 
 const ListagemPedidos = () => {
   const HeadingColor = useColorModeValue('blue.800', 'blue.200');
@@ -36,6 +36,10 @@ const ListagemPedidos = () => {
   const [itensPorPagina, setItensPorPagina] = useState<number>(3);
   const ultimaPagina = paginaAtual * itensPorPagina;
   const primeiraPagina = ultimaPagina - itensPorPagina;
+  // ordenador
+  const [ordenadarPor, setOrdernarPor] = useState<string>('');
+  const [gerenciarOrdenacao, setGerenciarOrdenacao] = useState<boolean>(false);
+
   //
   // set da listagem de dados mocados
   // caso estivesse puxando de uma api seria utilizado método de FETCH DATA API para popular o estado setListaPedido()
@@ -46,13 +50,33 @@ const ListagemPedidos = () => {
   const [listaPedidos, setListaPedidos] = useState<IPedidoDataOrdersProps[]>(pedidosData.orders);
 
   const listagemPedidos = useMemo(() => {
+    // ordenador dinâmico
+    function ordenarItens(campoPrincipal: any) {
+      return function ordenar(itemA: any, itemB: any) {
+        let ordernarPor = gerenciarOrdenacao === true ? 'asc' : 'desc';
+        if (!itemA.hasOwnProperty(campoPrincipal) || !itemB.hasOwnProperty(campoPrincipal)) {
+          return 0;
+        }
+        const varA =
+          typeof itemA[campoPrincipal] === 'string' ? itemA[campoPrincipal].toUpperCase() : itemA[campoPrincipal];
+        const varB =
+          typeof itemB[campoPrincipal] === 'string' ? itemB[campoPrincipal].toUpperCase() : itemB[campoPrincipal];
+        let comparar = 0;
+        if (varA > varB) {
+          comparar = 1;
+        } else if (varA < varB) {
+          comparar = -1;
+        }
+        return ordernarPor === 'desc' ? comparar * -1 : comparar;
+      };
+    }
     // slicer da página atual
-    const itensAtuais = listaPedidos.slice(primeiraPagina, ultimaPagina);
+    const itensAtuais = listaPedidos.sort(ordenarItens(ordenadarPor)).slice(primeiraPagina, ultimaPagina);
     // render dos itens por página
     return itensAtuais.map((item) => {
       return <CardPedido key={item._id} dadosPedido={item} />;
     });
-  }, [listaPedidos, primeiraPagina, ultimaPagina]);
+  }, [listaPedidos, primeiraPagina, ultimaPagina, ordenadarPor, gerenciarOrdenacao]);
 
   const filtrosPedidos = () => {
     function handleFiltrarTela() {
@@ -91,6 +115,7 @@ const ListagemPedidos = () => {
             <option value="50">Até R$ 50</option>
             <option value="100">Até R$ 100</option>
             <option value="200">Até R$ 200</option>
+            <option value="1000">Até R$ 1000</option>
           </Select>
         </FormControl>
         <IconButton
@@ -121,45 +146,26 @@ const ListagemPedidos = () => {
 
   const ordenacaoPedidos = () => {
     return (
-      <Flex justifyContent="space-between" mb="20px">
-        <Box>Ordernadores</Box>
-        <Box>Mudar visão</Box>
-      </Flex>
-    );
-  };
-
-  const paginacaoPedidos = () => {
-    // paginação simples
-    let paginasListadas = [];
-    for (let i = 1; i <= Math.ceil(listaPedidos.length / itensPorPagina); i++) {
-      paginasListadas.push(i);
-    }
-    // função para mudar página
-    function mudarPaginacao(pagina: number) {
-      setPaginaAtual(pagina);
-    }
-    return (
-      <Flex justifyContent="space-between">
-        <Flex alignItems="center">
-          <Select value={itensPorPagina} mr="5px" onChange={(e) => setItensPorPagina(+e.target.value)}>
-            <option value="2">2 itens</option>
-            <option value="3">3 itens</option>
-            <option value="4">4 itens</option>
-            <option value="6">6 itens</option>
+      <Flex justifyContent="space-between" alignItems="center" flexDirection={{ md: 'initial', sm: 'column' }}>
+        <HStack alignItems="center" mb="10px" w={{ md: '30%', sm: '100%' }}>
+          <Select
+            value={ordenadarPor}
+            mr="5px"
+            onChange={(e) => setOrdernarPor(e.target.value)}
+            placeholder="Ordenar itens por..."
+          >
+            <option value="store">Nome</option>
+            <option value="date">Data</option>
+            <option value="amount">Valor</option>
           </Select>
-          <Text textTransform="uppercase" fontSize="10px" color="gray.400">
-            /Página
-          </Text>
-        </Flex>
-        <HStack>
-          {paginasListadas.map((pagina) => {
-            return (
-              <Button key={pagina} p="5px" onClick={() => mudarPaginacao(pagina)}>
-                {pagina}
-              </Button>
-            );
-          })}
+          <IconButton
+            children={gerenciarOrdenacao ? <FaSortAlphaDown /> : <FaSortAlphaUpAlt />}
+            aria-label="Ordenação"
+            onClick={() => setGerenciarOrdenacao(!gerenciarOrdenacao)}
+            isDisabled={ordenadarPor === ''}
+          />
         </HStack>
+        <Box></Box>
       </Flex>
     );
   };
@@ -176,8 +182,17 @@ const ListagemPedidos = () => {
           </Heading>
         </Flex>
         <Box>{filtrosPedidos()}</Box>
+        <Box>{ordenacaoPedidos()}</Box>
         <Box>{listagemPedidos}</Box>
-        <Box>{paginacaoPedidos()}</Box>
+        <Box>
+          <Paginacao
+            paginaAtual={paginaAtual}
+            itensPorPagina={itensPorPagina}
+            totalItens={listaPedidos.length}
+            mudarPaginaAtual={setPaginaAtual}
+            mudarQtdItensPorPagina={setItensPorPagina}
+          />
+        </Box>
       </Grid>
     </Flex>
   );

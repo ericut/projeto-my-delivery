@@ -205,7 +205,7 @@ export default function CardPedido({ dadosPedido, detalhePedido }: IDadosPedido)
                 <Text color="green.400" w="16px" mr="10px">
                   <FaMoneyBill />
                 </Text>{' '}
-                <Text fontWeight="bold">
+                <Flex fontWeight="bold">
                   <Tooltip
                     hasArrow
                     label={`Pedido: ${valorDoPedido(itemPedido.amount)} | Frete: ${valorDoPedido(
@@ -215,7 +215,7 @@ export default function CardPedido({ dadosPedido, detalhePedido }: IDadosPedido)
                   >
                     <Text>{valorDoPedido(itemPedido.amount + itemPedido.deliveryFee)}</Text>
                   </Tooltip>
-                </Text>
+                </Flex>
               </Flex>
             </Box>
             {/* aqui poderia ser realizado uma rota com location, levando params
