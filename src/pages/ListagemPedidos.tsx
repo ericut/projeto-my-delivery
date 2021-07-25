@@ -161,7 +161,7 @@ const ListagemPedidos = () => {
             onChange={(e) => setOrdernarPor(e.target.value)}
             placeholder="Ordenar itens por..."
           >
-            <option value="store">Nome</option>
+            <option value="store">Nome da Loja</option>
             <option value="date">Data</option>
             <option value="amount">Valor</option>
           </Select>
