@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useContext, useEffect } from 'react';
 // chakra
 import {
   Text,
@@ -17,15 +17,18 @@ import {
 // icons
 import { IoFastFood } from 'react-icons/io5';
 import { FaSearch, FaTrash, FaSortAlphaDown, FaSortAlphaUpAlt } from 'react-icons/fa';
-// data
-import { pedidosData } from '../data/pedidos.data';
-// interfaces
-import { IPedidoDataOrdersProps } from '../interfaces/pedidos.interface';
 // components
 import CardPedido from './components/CardPedido';
 import Paginacao from './components/Paginacao';
+// interfaces
+import { IPedidoDataOrdersProps } from '../interfaces/pedidos.interface';
+// context provider
+import { ListagemPedidosContext } from '../context/ListaPedidos.context';
 
 const ListagemPedidos = () => {
+  // context
+  const { dadosListagemPedidos } = useContext(ListagemPedidosContext);
+  // chakra
   const HeadingColor = useColorModeValue('blue.800', 'blue.200');
   const FiltersBGColor = useColorModeValue('blue.100', 'blue.800');
   // filtros
@@ -47,7 +50,10 @@ const ListagemPedidos = () => {
   // neste projeto não iremos tratar desta meneira mas como exemplo podemos utilizar o Query Params (caso a API solicite POST)
   // fetch('https://url',{method: 'POST', body: query:`{objectStrigs}`}).then(response => {setListaPedido(response.data)})
   //
-  const [listaPedidos, setListaPedidos] = useState<IPedidoDataOrdersProps[]>(pedidosData.orders);
+  const [listaPedidosPrev] = useState<IPedidoDataOrdersProps[]>(dadosListagemPedidos ? dadosListagemPedidos : []);
+  const [listaPedidos, setListaPedidos] = useState<IPedidoDataOrdersProps[]>(
+    dadosListagemPedidos ? dadosListagemPedidos : []
+  );
 
   const listagemPedidos = useMemo(() => {
     // ordenador dinâmico
@@ -72,26 +78,31 @@ const ListagemPedidos = () => {
     }
     // slicer da página atual
     const itensAtuais = listaPedidos.sort(ordenarItens(ordenadarPor)).slice(primeiraPagina, ultimaPagina);
+
     // render dos itens por página
     return itensAtuais.map((item) => {
       return <CardPedido key={item._id} dadosPedido={item} />;
     });
   }, [listaPedidos, primeiraPagina, ultimaPagina, ordenadarPor, gerenciarOrdenacao]);
 
+  useEffect(() => {
+    console.log('teste effect');
+  }, []);
+
   const filtrosPedidos = () => {
     function handleFiltrarTela() {
       if (buscarLoja !== '' || buscarValor !== '') {
-        let dadosFiltrados = pedidosData.orders.filter((filteredItem) => {
+        let dadosFiltrados = listaPedidosPrev.filter((filteredItem) => {
           let valorTotal = filteredItem.amount + filteredItem.deliveryFee;
           let lojaFiltrada = buscarLoja && filteredItem.store.indexOf(buscarLoja.toUpperCase()) !== -1;
           let valorFiltrado = buscarValor && valorTotal <= +buscarValor * 100;
           return lojaFiltrada || valorFiltrado;
         });
-        setListaPedidos(dadosFiltrados);
+        setListaPedidos(dadosFiltrados ? dadosFiltrados : []);
       }
     }
     function handleLimparFiltros() {
-      setListaPedidos(pedidosData.orders);
+      setListaPedidos(listaPedidosPrev);
       setBuscarLoja('');
       setBuscarValor('');
     }

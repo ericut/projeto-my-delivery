@@ -9,7 +9,6 @@ import { FaCreditCard, FaUserCircle, FaMoneyBill, FaStore, FaMapMarkerAlt } from
 import { IPedidoDataOrdersProps } from '../../interfaces/pedidos.interface';
 
 interface IDadosPedido {
-  key?: string | undefined;
   dadosPedido?: IPedidoDataOrdersProps;
   detalhePedido?: IPedidoDataOrdersProps;
 }
@@ -82,7 +81,12 @@ export default function CardPedido({ dadosPedido, detalhePedido }: IDadosPedido)
             <Flex ml="20px" pr={{ md: '20px', sm: '10px' }} flexDirection="column">
               {itemPedido.items?.map((subItem) => {
                 return (
-                  <Flex justifyContent="space-between" borderBottom="1px dotted" borderBottomColor="gray.600">
+                  <Flex
+                    key={Math.floor(Math.random() * 5000 * 5000)}
+                    justifyContent="space-between"
+                    borderBottom="1px dotted"
+                    borderBottomColor="gray.600"
+                  >
                     <Text w="50%">{subItem.name}</Text>
                     <Text w={{ md: '20%', sm: '10%' }} textAlign="right">
                       {subItem.quantity}
@@ -130,7 +134,12 @@ export default function CardPedido({ dadosPedido, detalhePedido }: IDadosPedido)
             <Flex ml="20px" pr={{ md: '20px', sm: '10px' }} flexDirection="column">
               {itemPedido.payments?.map((subItem) => {
                 return (
-                  <Flex justifyContent="space-between" borderBottom="1px dotted" borderBottomColor="gray.600">
+                  <Flex
+                    key={Math.floor(Math.random() * 5000 * 5000)}
+                    justifyContent="space-between"
+                    borderBottom="1px dotted"
+                    borderBottomColor="gray.600"
+                  >
                     <Text w="60%">{subItem.method}</Text>
                     <Text w={{ md: '30%', sm: '40%' }} textAlign="right">
                       {valorDoPedido(+subItem.amount)}
