@@ -1,12 +1,12 @@
 ## My Delivery
 
-![Logo](https://github.com/ericut/projeto-my-delivery/blob/main/.doc/imgs/00_logo.png)
+![Logo](https://github.com/ericut/projeto-my-delivery/blob/master/.doc/imgs/00_logo.png)
 
 Aplicação para listagem de pedidos com detalhes e informações dos itens, endereço de entrega e formas de pagamentos.
 Esta aplicação é um estudo/desafio de manutenção de TypeScript, Manipulação de Arrays, Ordenadação e Paginação de listagem, Utilização de Parâmetros com Rotas e Reutilização de Componentes.
 
-| ![TelaInicial](https://github.com/ericut/projeto-my-delivery/blob/main/.doc/imgs/01_pagina-inicial.png) | ![TelaInicial](https://github.com/ericut/projeto-my-delivery/blob/main/.doc/imgs/02_detalhes.png) |
-| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| ![TelaInicial](https://github.com/ericut/projeto-my-delivery/blob/master/.doc/imgs/01_pagina-inicial.png) | ![TelaInicial](https://github.com/ericut/projeto-my-delivery/blob/master/.doc/imgs/02_detalhes.png) |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
 
 ### Recursos
 
@@ -18,6 +18,9 @@ Esta aplicação é um estudo/desafio de manutenção de TypeScript, Manipulaç�
 - Quantidade de itens por página
 - Rota para Detalhes do pedido
 - [UI] Botão Color Mode Switcher
+
+| ![TelaInicial](https://github.com/ericut/projeto-my-delivery/blob/master/.doc/imgs/03_funcionalidades.png) |
+| ---------------------------------------------------------------------------------------------------------- |
 
 ### Instalação
 
