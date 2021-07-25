@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext, useEffect } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 // chakra
 import {
   Text,
@@ -80,14 +80,10 @@ const ListagemPedidos = () => {
     const itensAtuais = listaPedidos.sort(ordenarItens(ordenadarPor)).slice(primeiraPagina, ultimaPagina);
 
     // render dos itens por página
-    return itensAtuais.map((item) => {
+    return itensAtuais.map((item: IPedidoDataOrdersProps) => {
       return <CardPedido key={item._id} dadosPedido={item} />;
     });
   }, [listaPedidos, primeiraPagina, ultimaPagina, ordenadarPor, gerenciarOrdenacao]);
-
-  useEffect(() => {
-    console.log('teste effect');
-  }, []);
 
   const filtrosPedidos = () => {
     function handleFiltrarTela() {
