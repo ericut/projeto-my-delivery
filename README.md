@@ -31,7 +31,7 @@ Esta aplicação é um estudo/desafio de manutenção de TypeScript, Manipulaç�
   `yarn` ou `npm install`
 
 - Rodar aplicação
-  `yarn dev` ou `npm run dev`
+  `yarn start` ou `npm run start`
 
 ### Tecnologias utilizadas
 
