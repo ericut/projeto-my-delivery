@@ -79,6 +79,8 @@ const ListagemPedidos = () => {
     // slicer da página atual
     const itensAtuais = listaPedidos.sort(ordenarItens(ordenadarPor)).slice(primeiraPagina, ultimaPagina);
 
+    console.log(itensAtuais);
+
     // render dos itens por página
     return itensAtuais.map((item: IPedidoDataOrdersProps) => {
       return <CardPedido key={item._id} dadosPedido={item} />;
@@ -91,7 +93,7 @@ const ListagemPedidos = () => {
         let dadosFiltrados = listaPedidosPrev.filter((filteredItem) => {
           let valorTotal = filteredItem.amount + filteredItem.deliveryFee;
           let lojaFiltrada = buscarLoja && filteredItem.store.indexOf(buscarLoja.toUpperCase()) !== -1;
-          let valorFiltrado = buscarValor && valorTotal <= +buscarValor * 100;
+          let valorFiltrado = buscarValor && valorTotal <= parseFloat(buscarValor) * 100;
           return lojaFiltrada || valorFiltrado;
         });
         setListaPedidos(dadosFiltrados ? dadosFiltrados : []);
@@ -163,7 +165,7 @@ const ListagemPedidos = () => {
           >
             <option value="store">Nome da Loja</option>
             <option value="date">Data</option>
-            <option value="amount">Valor</option>
+            <option value="total">Valor Total</option>
           </Select>
           <IconButton
             children={gerenciarOrdenacao ? <FaSortAlphaDown /> : <FaSortAlphaUpAlt />}

@@ -13,6 +13,7 @@ export interface IPedidoDataOrdersProps {
   address?: IPedidoAdressProps;
   items?: IPedidoItemsProps[];
   payments?: IPedidoPaymentsProps[];
+  total?: number;
 }
 
 export interface IPedidoCustomerProps {

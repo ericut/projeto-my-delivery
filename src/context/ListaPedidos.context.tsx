@@ -20,7 +20,12 @@ export function ListagemPedidosProvider({ children }: IListagemProviderProps) {
   );
 
   useEffect(() => {
-    setDadosListagemPedidos(pedidosData.orders);
+    setDadosListagemPedidos(
+      pedidosData.orders.map((item) => {
+        item.total = item.amount + item.deliveryFee;
+        return item;
+      })
+    );
   }, []);
 
   return <ListagemPedidosContext.Provider value={{ dadosListagemPedidos }}>{children}</ListagemPedidosContext.Provider>;
